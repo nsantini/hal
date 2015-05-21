@@ -7,8 +7,9 @@ var TodoApp = React.createClass({
    */
   render: function() {
     return (
-      <div>
-        Open the door Hal!
+      <div className="jumbotron">
+        <h1>Open the door Hal!</h1>
+        <p className="lead">And lets create a TODO list</p>
       </div>
     );
   }
