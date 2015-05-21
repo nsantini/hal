@@ -12,8 +12,12 @@
     "watchify": "^3.2.1"
   },
   "dependencies": {
+    "body-parser": "^1.12.4",
     "express": "^4.12.4",
+    "express-json": "^1.0.0",
     "flux": "^2.0.3",
+    "halson": "^2.3.1",
+    "jquery": "^2.1.4",
     "react": "^0.13.3",
     "underscore": "^1.8.3"
   }

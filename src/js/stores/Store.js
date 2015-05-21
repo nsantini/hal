@@ -4,16 +4,6 @@ var assign = require('object-assign');
 
 var todos = [];
 
-function create(text) {
-  var toAdd = text.trim();
-  if (toAdd) {
-    todos.push({
-      complete: false,
-      text: toAdd
-    })
-  }
-};
-
 var Store = assign({}, EventEmitter.prototype, {
 
   getAllTodos: function() {
@@ -36,9 +26,17 @@ var Store = assign({}, EventEmitter.prototype, {
 Dispatcher.register(function(action) {
   switch (action.action) {
     case 'CREATE':
-      create(action.text);
+      todos.push({
+        complete: false,
+        text: action.text
+      });
       Store.emitChange();
       break;
+    case 'LOADED':
+      todos = action.todos;
+      Store.emitChange();
+      break;
+
   }
 });
 

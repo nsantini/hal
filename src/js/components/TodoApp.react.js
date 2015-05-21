@@ -2,6 +2,7 @@ var React = require('react');
 var Header = require('./Header.react');
 var Todos = require('./Todos.react');
 var Store = require('../stores/Store');
+var Actions = require('../actions/Actions');
 
 function getAllTodos() {
   return {
@@ -16,6 +17,7 @@ var TodoApp = React.createClass({
   },
 
   componentDidMount: function() {
+    Actions.loadTodos();
     Store.addListener(this.storeChanged);
   },
 
