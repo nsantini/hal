@@ -12,6 +12,12 @@ var todos = {
     return JSON.stringify(_todos);
   },
 
+  getTodo: function(id) {
+    return _todos.getEmbed('todos', function(todo) {
+      return todo.id === id;
+    });
+  },
+
   addTodo: function(data) {
     var id = _.uniqueId('todo_');
     var todo = halson({
@@ -27,21 +33,19 @@ var todos = {
   },
 
   toggle: function(id) {
-    var todo = _.filter(_todos.getEmbeds('todos'), function(t) {
-      return t.id === id;
-    })[0];
+    var todo = this.getTodo(id);
     todo.completed = !todo.completed;
-  },
-
-  delete: function(id) {
-    _todos.removeEmbeds('todos', function(todo) {
-      return todo.id === id;
-    });
   },
 
   toggleAll: function() {
     _.each(_todos.getEmbeds('todos'), function(todo) {
       todo.completed = !todo.completed;
+    });
+  },
+
+  delete: function(id) {
+    _todos.removeEmbeds('todos', function(todo) {
+      return todo.id === id;
     });
   },
 

@@ -13,10 +13,12 @@ var Item = React.createClass({
           dangerouslySetInnerHTML={{
             __html: text
           }}></span>
-        <a href="#" onClick={this.toggle}>&nbsp;
+        <span>&nbsp;</span>
+        <a href="#" onClick={this.toggle}>
           <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
         </a>
-        <a href="#" onClick={this.delete}>&nbsp;
+        <span>&nbsp;</span>
+        <a href="#" onClick={this.delete}>
           <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </a>
       </li>

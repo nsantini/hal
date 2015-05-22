@@ -8,14 +8,14 @@ var Todos = React.createClass({
   render: function() {
     var data = this.props.data;
     var todos = data ? data.getEmbeds('todos') : null;
-    var output = <li className="list-group-item">--no todos yet--</li>;
+    var list = <li className="list-group-item">--no todos yet--</li>;
 
     if (todos && !_.isArray(todos)) {
       todos = [todos];
     }
 
     if (_.isArray(todos) && !_.isEmpty(todos)) {
-      output = _.map(todos, function(todo) {
+      list = _.map(todos, function(todo) {
         return <Item data={todo} />;
       });
     }
@@ -39,7 +39,7 @@ var Todos = React.createClass({
         </div>
         <div className="row">
           <ul className="list-group">
-            {output}
+            {list}
           </ul>
         </div>
       </div>

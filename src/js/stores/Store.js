@@ -1,12 +1,22 @@
 var $ = require('jquery');
-var _ = require('underscore');
-var Dispatcher = require('../dispatcher/Dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var halson = require('halson');
+var Dispatcher = require('../dispatcher/Dispatcher');
 
 // Internal storage of TODOs
 var _todos = null;
+
+function loadTodos(data) {
+  _todos = halson(JSON.parse(data));
+  Store.emitChange();
+};
+
+function getTodo(id) {
+  return _todos.getEmbed('todos', function(todo) {
+    return todo.id === id;
+  });
+};
 
 var Store = assign({}, EventEmitter.prototype, {
 
@@ -24,70 +34,83 @@ var Store = assign({}, EventEmitter.prototype, {
 
   removeListener: function(callback) {
     this.removeListener('changed', callback);
+  },
+
+  loadTodos: function() {
+    $.ajax({
+      url: "/todos",
+      success: loadTodos
+    });
+  },
+
+  create: function(text) {
+    $.ajax({
+      url: _todos.getLink('create').href,
+      method: 'POST',
+      data: { text: text },
+      success: loadTodos
+    });
+  },
+
+  toggle: function(id) {
+    var todo = getTodo(id);
+    $.ajax({
+      url: todo.getLink('toggle').href,
+      method: 'POST',
+      success: loadTodos
+    });
+  },
+
+  toggleAll: function() {
+    $.ajax({
+      url: _todos.getLink('toggle').href,
+      method: 'POST',
+      success: loadTodos
+    });
+  },
+
+  delete: function(id) {
+    var todo = getTodo(id);
+    $.ajax({
+      url: todo.getLink('delete').href,
+      method: 'POST',
+      success: loadTodos
+    });
+  },
+
+  deleteAll: function() {
+    $.ajax({
+      url: _todos.getLink('delete').href,
+      method: 'POST',
+      success: loadTodos
+    });
   }
 });
-
-function loadTodos(data) {
-  _todos = halson(JSON.parse(data));
-  Store.emitChange();
-};
-
-function getTodo(id) {
-  return _.filter(_todos.getEmbeds('todos'), function(t) {
-    return t.id === id;
-  })[0];
-};
 
 Dispatcher.register(function(action) {
   switch (action.action) {
     case 'LOAD':
-      $.ajax({
-          url: "/todos",
-          success: loadTodos
-      });
+      Store.loadTodos();
       break;
 
     case 'CREATE':
-      $.ajax({
-          url: _todos.getLink('create').href,
-          method: 'POST',
-          data: { text: action.text },
-          success: loadTodos
-      });
+      Store.create(action.text);
       break;
 
     case 'TOGGLE':
-      var todo = getTodo(action.id);
-      $.ajax({
-          url: todo.getLink('toggle').href,
-          method: 'POST',
-          success: loadTodos
-      });
+      Store.toggle(action.id);
       break;
 
     case 'TOGGLEALL':
-      $.ajax({
-          url: _todos.getLink('toggle').href,
-          method: 'POST',
-          success: loadTodos
-      });
+      Store.toggleAll();
       break;
 
     case 'DELETE':
-      var todo = getTodo(action.id);
-      $.ajax({
-          url: todo.getLink('delete').href,
-          method: 'POST',
-          success: loadTodos
-      });
+      Store.delete(action.id);
       break;
 
     case 'DELETEALL':
-      $.ajax({
-          url: _todos.getLink('delete').href,
-          method: 'POST',
-          success: loadTodos
-      });
+      Store.deleteAll();
       break;
   }
 });
