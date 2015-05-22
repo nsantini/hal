@@ -19,6 +19,12 @@ var Actions = {
       action: 'TOGGLE',
       id: id
     });
+  },
+
+  toggleAll: function() {
+    Dispatcher.dispatch({
+      action: 'TOGGLEALL'
+    });
   }
 };
 

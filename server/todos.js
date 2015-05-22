@@ -38,7 +38,9 @@ var todos = {
   },
 
   toggleAll: function() {
-
+    _.each(_todos.getEmbeds('todos'), function(todo) {
+      todo.completed = !todo.completed;
+    });
   },
 
   deleteAll: function() {

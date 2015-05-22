@@ -54,7 +54,15 @@ Dispatcher.register(function(action) {
       })[0];
       $.ajax({
           url: todo.getLink('toggle').href,
-          method: 'POST'
+          method: 'POST',
+          success: loadTodos
+      });
+      break;
+    case 'TOGGLEALL':
+      $.ajax({
+          url: _todos.getLink('toggle').href,
+          method: 'POST',
+          success: loadTodos
       });
       break;
   }

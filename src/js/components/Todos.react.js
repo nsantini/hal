@@ -1,5 +1,6 @@
-var React = require('react');
 var _ = require("underscore");
+var React = require('react');
+var Item = require('./Item.react');
 var Actions = require('../actions/Actions');
 
 var Todos = React.createClass({
@@ -14,28 +15,33 @@ var Todos = React.createClass({
     }
 
     if (_.isArray(todos) && !_.isEmpty(todos)) {
-      output = _.map(todos, (function(todo) {
-        return (
-          <li data-id={todo.id} className="list-group-item">
-            {todo.text}&nbsp;
-            <a href="#" onClick={this.toggle}>
-              <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
-            </a>
-          </li>);
-      }).bind(this))
+      output = _.map(todos, function(todo) {
+        return <Item data={todo} />;
+      });
     }
 
     return (
-      <div className="row">
-        <ul className="list-group">
-          {output}
-        </ul>
+      <div>
+        <div className="row">
+          <a href="#" onClick={this.toggle}>
+            <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+          </a>
+          <span>&nbsp;(toggle all)</span>
+        </div>
+        <div className="row">
+          <ul className="list-group">
+            {output}
+          </ul>
+        </div>
       </div>
     );
   },
 
   toggle: function(event) {
-    Actions.toggle(event.target.parentNode.parentNode.attributes['data-id'].value);
+    event.preventDefault();
+    Actions.toggleAll();
   }
 });
 
