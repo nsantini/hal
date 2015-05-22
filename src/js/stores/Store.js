@@ -1,14 +1,17 @@
 var $ = require('jquery');
+var _ = require('underscore');
 var Dispatcher = require('../dispatcher/Dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var halson = require('halson');
 
-var todos = {_embedded: { todos: [] }};
+// Internal storage of TODOs
+var _todos = null;
 
 var Store = assign({}, EventEmitter.prototype, {
 
   getAllTodos: function() {
-    return todos;
+    return _todos;
   },
 
   emitChange: function() {
@@ -25,7 +28,7 @@ var Store = assign({}, EventEmitter.prototype, {
 });
 
 function loadTodos(data) {
-  todos = JSON.parse(JSON.parse(data));
+  _todos = halson(JSON.parse(data));
   Store.emitChange();
 }
 
@@ -39,10 +42,19 @@ Dispatcher.register(function(action) {
       break;
     case 'CREATE':
       $.ajax({
-          url: "/todos",
+          url: _todos.getLink('create').href,
           method: 'POST',
           data: { text: action.text },
           success: loadTodos
+      });
+      break;
+    case 'TOGGLE':
+      var todo = _.filter(_todos.getEmbeds('todos'), function(t) {
+        return t.id === action.id;
+      })[0];
+      $.ajax({
+          url: todo.getLink('toggle').href,
+          method: 'POST'
       });
       break;
   }

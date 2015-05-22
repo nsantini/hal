@@ -3,6 +3,7 @@ var _ = require('underscore');
 
 var _todos = halson({})
   .addLink('self', '/todos')
+  .addLink('create', '/todos/add')
   .addLink('toggle', '/todos/toggleall')
   .addLink('delete', '/todos/deleteall');
 
@@ -26,7 +27,10 @@ var todos = {
   },
 
   toggle: function(id) {
-
+    var todo = _.filter(_todos.getEmbeds('todos'), function(t) {
+      return t.id === id;
+    })[0];
+    todo.completed = !todo.completed;
   },
 
   delete: function(id) {
@@ -38,7 +42,7 @@ var todos = {
   },
 
   deleteAll: function() {
-    
+
   }
 };
 

@@ -1,20 +1,30 @@
 var React = require('react');
 var _ = require("underscore");
+var Actions = require('../actions/Actions');
 
 var Todos = React.createClass({
 
   render: function() {
-    var todos = this.props.data._embedded ? this.props.data._embedded.todos : null;
-    var output = null;
-    if (_.isArray(todos)) {
-      output = _.map(todos, function(todo) {
-        return (<li className="list-group-item">{todo.text}</li>);
-      })
-    } else if (_.isObject(todos)) {
-      output = <li className="list-group-item">{todos.text}</li>;
-    } else {
-      output = <li className="list-group-item">--no todos yet--</li>;
+    var data = this.props.data;
+    var todos = data ? data.getEmbeds('todos') : null;
+    var output = <li className="list-group-item">--no todos yet--</li>;
+
+    if (todos && !_.isArray(todos)) {
+      todos = [todos];
     }
+
+    if (_.isArray(todos) && !_.isEmpty(todos)) {
+      output = _.map(todos, (function(todo) {
+        return (
+          <li data-id={todo.id} className="list-group-item">
+            {todo.text}&nbsp;
+            <a href="#" onClick={this.toggle}>
+              <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </a>
+          </li>);
+      }).bind(this))
+    }
+
     return (
       <div className="row">
         <ul className="list-group">
@@ -22,6 +32,10 @@ var Todos = React.createClass({
         </ul>
       </div>
     );
+  },
+
+  toggle: function(event) {
+    Actions.toggle(event.target.parentNode.parentNode.attributes['data-id'].value);
   }
 });
 

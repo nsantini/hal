@@ -12,6 +12,13 @@ var Actions = {
       action: 'CREATE',
       text: text
     });
+  },
+
+  toggle: function(id) {
+    Dispatcher.dispatch({
+      action: 'TOGGLE',
+      id: id
+    });
   }
 };
 
