@@ -4,14 +4,14 @@ A TODO app with [React](https://facebook.github.io/react/), [Flux](https://faceb
 
 ## Running
 
-You must have npm installed on your computer.
+You must have [nodejs](https://nodejs.org/) installed on your computer.
 From the root project directory run these commands from the command line:
 
     npm install
 
 This will install all dependencies.
 
-To build and run the project, this command:
+To build and run the project, run this command:
 
     gulp
 
@@ -21,6 +21,10 @@ The implementation uses:
 - [HALSON](https://github.com/seznam/halson) to deal with HAL
 - [Express](https://www.npmjs.com/package/express) to implement a Web Server and REST API
 - [Underscore](http://underscorejs.org/) to aid with functional programming
+- [Gulp](http://gulpjs.com/) to build the project and run the server
+- [Browserify](http://browserify.org/) to 'require' modules in the browser
+- [Reactify](https://www.npmjs.com/package/reactify) to transform JSX into JS
+- [Watchify](https://github.com/substack/watchify) to listen to changes in the code and re-run the build process
 
 ## To be improved
 
