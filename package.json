@@ -5,7 +5,7 @@
   "jest": {
     "collectCoverage": true,
     "unmockedModulePathPatterns": [
-      "node_modules"
+      "node_modules/react"
     ]
   },
   "scripts": {

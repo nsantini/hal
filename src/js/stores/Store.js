@@ -7,17 +7,6 @@ var Dispatcher = require('../dispatcher/Dispatcher');
 // Internal storage of TODOs
 var _todos = null;
 
-function loadTodos(data) {
-  _todos = halson(JSON.parse(data));
-  Store.emitChange();
-};
-
-function getTodo(id) {
-  return _todos.getEmbed('todos', function(todo) {
-    return todo.id === id;
-  });
-};
-
 var Store = assign({}, EventEmitter.prototype, {
 
   getAllTodos: function() {
@@ -36,10 +25,21 @@ var Store = assign({}, EventEmitter.prototype, {
     this.removeListener('changed', callback);
   },
 
-  loadTodos: function() {
+  loadTodos: function(data) {
+    _todos = halson(JSON.parse(data));
+    Store.emitChange();
+  },
+
+  getTodo: function(id) {
+    return _todos.getEmbed('todos', function(todo) {
+      return todo.id === id;
+    });
+  },
+
+  loadTodosFromServer: function() {
     $.ajax({
       url: "/todos",
-      success: loadTodos
+      success: Store.loadTodos
     });
   },
 
@@ -48,16 +48,16 @@ var Store = assign({}, EventEmitter.prototype, {
       url: _todos.getLink('create').href,
       method: 'POST',
       data: { text: text },
-      success: loadTodos
+      success: Store.loadTodos
     });
   },
 
   toggle: function(id) {
-    var todo = getTodo(id);
+    var todo = this.getTodo(id);
     $.ajax({
       url: todo.getLink('toggle').href,
       method: 'POST',
-      success: loadTodos
+      success: Store.loadTodos
     });
   },
 
@@ -65,16 +65,16 @@ var Store = assign({}, EventEmitter.prototype, {
     $.ajax({
       url: _todos.getLink('toggle').href,
       method: 'POST',
-      success: loadTodos
+      success: Store.loadTodos
     });
   },
 
   delete: function(id) {
-    var todo = getTodo(id);
+    var todo = this.getTodo(id);
     $.ajax({
       url: todo.getLink('delete').href,
       method: 'POST',
-      success: loadTodos
+      success: Store.loadTodos
     });
   },
 
@@ -82,7 +82,7 @@ var Store = assign({}, EventEmitter.prototype, {
     $.ajax({
       url: _todos.getLink('delete').href,
       method: 'POST',
-      success: loadTodos
+      success: Store.loadTodos
     });
   }
 });
@@ -90,7 +90,7 @@ var Store = assign({}, EventEmitter.prototype, {
 Dispatcher.register(function(action) {
   switch (action.action) {
     case 'LOAD':
-      Store.loadTodos();
+      Store.loadTodosFromServer();
       break;
 
     case 'CREATE':

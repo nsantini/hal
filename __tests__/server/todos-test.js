@@ -1,5 +1,6 @@
 jest.dontMock('../../server/todos');
 jest.dontMock('halson');
+jest.dontMock('underscore');
 
 describe('Test the TODOs backend', function() {
   var Todos;

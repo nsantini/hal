@@ -16,6 +16,7 @@ To build and run the project, run this command:
     gulp
 
 To execute the unit test run:
+
     npm test
 
 ## Dependencies
