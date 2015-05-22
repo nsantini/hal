@@ -25,6 +25,11 @@ The implementation uses:
 - [Browserify](http://browserify.org/) to 'require' modules in the browser
 - [Reactify](https://www.npmjs.com/package/reactify) to transform JSX into JS
 - [Watchify](https://github.com/substack/watchify) to listen to changes in the code and re-run the build process
+- [Jest](https://facebook.github.io/jest/) for unit testing
+
+## Notes
+
+- Due to time constraints this implementation *wasn't* done using [http://coffeescript.org/]
 
 ## To be improved
 
