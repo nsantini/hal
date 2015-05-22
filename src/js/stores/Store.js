@@ -1,3 +1,4 @@
+var $ = require('jquery');
 var Dispatcher = require('../dispatcher/Dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
@@ -23,13 +24,27 @@ var Store = assign({}, EventEmitter.prototype, {
   }
 });
 
+function loadTodos(data) {
+  todos = JSON.parse(JSON.parse(data));
+  Store.emitChange();
+}
+
 Dispatcher.register(function(action) {
   switch (action.action) {
-    case 'LOADED':
-      todos = action.todos;
-      Store.emitChange();
+    case 'LOAD':
+      $.ajax({
+          url: "/todos",
+          success: loadTodos
+      });
       break;
-
+    case 'CREATE':
+      $.ajax({
+          url: "/todos",
+          method: 'POST',
+          data: { text: action.text },
+          success: loadTodos
+      });
+      break;
   }
 });
 
