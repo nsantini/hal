@@ -15,6 +15,9 @@ To build and run the project, run this command:
 
     gulp
 
+To execute the unit test run:
+    npm test
+
 ## Dependencies
 
 The implementation uses:
@@ -29,7 +32,7 @@ The implementation uses:
 
 ## Notes
 
-- Due to time constraints this implementation *wasn't* done using [http://coffeescript.org/]
+- Due to time constraints this implementation **wasn't** done using [http://coffeescript.org/]
 
 ## To be improved
 
