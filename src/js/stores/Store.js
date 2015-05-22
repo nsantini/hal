@@ -30,7 +30,13 @@ var Store = assign({}, EventEmitter.prototype, {
 function loadTodos(data) {
   _todos = halson(JSON.parse(data));
   Store.emitChange();
-}
+};
+
+function getTodo(id) {
+  return _.filter(_todos.getEmbeds('todos'), function(t) {
+    return t.id === id;
+  })[0];
+};
 
 Dispatcher.register(function(action) {
   switch (action.action) {
@@ -40,6 +46,7 @@ Dispatcher.register(function(action) {
           success: loadTodos
       });
       break;
+
     case 'CREATE':
       $.ajax({
           url: _todos.getLink('create').href,
@@ -48,19 +55,36 @@ Dispatcher.register(function(action) {
           success: loadTodos
       });
       break;
+
     case 'TOGGLE':
-      var todo = _.filter(_todos.getEmbeds('todos'), function(t) {
-        return t.id === action.id;
-      })[0];
+      var todo = getTodo(action.id);
       $.ajax({
           url: todo.getLink('toggle').href,
           method: 'POST',
           success: loadTodos
       });
       break;
+
     case 'TOGGLEALL':
       $.ajax({
           url: _todos.getLink('toggle').href,
+          method: 'POST',
+          success: loadTodos
+      });
+      break;
+
+    case 'DELETE':
+      var todo = getTodo(action.id);
+      $.ajax({
+          url: todo.getLink('delete').href,
+          method: 'POST',
+          success: loadTodos
+      });
+      break;
+
+    case 'DELETEALL':
+      $.ajax({
+          url: _todos.getLink('delete').href,
           method: 'POST',
           success: loadTodos
       });

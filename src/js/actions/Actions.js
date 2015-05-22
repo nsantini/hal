@@ -25,6 +25,19 @@ var Actions = {
     Dispatcher.dispatch({
       action: 'TOGGLEALL'
     });
+  },
+
+  delete: function(id) {
+    Dispatcher.dispatch({
+      action: 'DELETE',
+      id: id
+    });
+  },
+
+  deleteAll: function() {
+    Dispatcher.dispatch({
+      action: 'DELETEALL'
+    });
   }
 };
 

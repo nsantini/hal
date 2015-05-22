@@ -16,6 +16,9 @@ var Item = React.createClass({
         <a href="#" onClick={this.toggle}>&nbsp;
           <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
         </a>
+        <a href="#" onClick={this.delete}>&nbsp;
+          <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </a>
       </li>
     );
   },
@@ -23,6 +26,11 @@ var Item = React.createClass({
   toggle: function(event) {
     event.preventDefault();
     Actions.toggle(event.target.parentNode.parentNode.attributes['data-id'].value);
+  },
+
+  delete: function(event) {
+    event.preventDefault();
+    Actions.delete(event.target.parentNode.parentNode.attributes['data-id'].value);
   }
 });
 

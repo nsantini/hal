@@ -34,7 +34,9 @@ var todos = {
   },
 
   delete: function(id) {
-
+    _todos.removeEmbeds('todos', function(todo) {
+      return todo.id === id;
+    });
   },
 
   toggleAll: function() {
@@ -44,7 +46,7 @@ var todos = {
   },
 
   deleteAll: function() {
-
+    _todos.removeEmbeds('todos');
   }
 };
 

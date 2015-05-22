@@ -31,7 +31,7 @@ var routes = {
     });
 
     app.post('/todos/delete/:id', function(req, res) {
-      todos.toggle(req.params.id);
+      todos.delete(req.params.id);
       res.send(JSON.stringify(todos.getAllTodos()));
     });
   }

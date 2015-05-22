@@ -29,6 +29,13 @@ var Todos = React.createClass({
             <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
           </a>
           <span>&nbsp;(toggle all)</span>
+          <span>&nbsp;&nbsp;&nbsp;</span>
+          <a href="#" onClick={this.delete}>
+            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </a>
+          <span>&nbsp;(delete all)</span>
         </div>
         <div className="row">
           <ul className="list-group">
@@ -42,6 +49,11 @@ var Todos = React.createClass({
   toggle: function(event) {
     event.preventDefault();
     Actions.toggleAll();
+  },
+
+  delete: function(event) {
+    event.preventDefault();
+    Actions.deleteAll();
   }
 });
 
