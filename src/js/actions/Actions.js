@@ -4,7 +4,7 @@ var Dispatcher = require('../dispatcher/Dispatcher');
 function dispatchLoadedTodos(data, textStatus, jqXHR) {
   Dispatcher.dispatch({
     action: 'LOADED',
-    todos: JSON.parse(data)
+    todos: JSON.parse(JSON.parse(data))
   });
 }
 
@@ -17,10 +17,6 @@ var Actions = {
   },
 
   create: function(text) {
-    Dispatcher.dispatch({
-      action: 'CREATE',
-      text: text
-    });
     $.ajax({
         url: "/todos",
         method: 'POST',

@@ -2,7 +2,7 @@ var Dispatcher = require('../dispatcher/Dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 
-var todos = [];
+var todos = {_embedded: { todos: [] }};
 
 var Store = assign({}, EventEmitter.prototype, {
 
@@ -25,13 +25,6 @@ var Store = assign({}, EventEmitter.prototype, {
 
 Dispatcher.register(function(action) {
   switch (action.action) {
-    case 'CREATE':
-      todos.push({
-        complete: false,
-        text: action.text
-      });
-      Store.emitChange();
-      break;
     case 'LOADED':
       todos = action.todos;
       Store.emitChange();
