@@ -5,14 +5,11 @@ var Item = React.createClass({
   render: function() {
     var todo = this.props.data;
     var text = todo.completed ?
-      "<s>" + todo.text + "</s>" :
+      <s>{todo.text}</s> :
       todo.text;
     return (
       <li data-id={todo.id} className="list-group-item">
-        <span
-          dangerouslySetInnerHTML={{
-            __html: text
-          }}></span>
+        <span>{text}</span>
         <span>&nbsp;</span>
         <a href="#" onClick={this.toggle}>
           <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>

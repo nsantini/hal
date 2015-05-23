@@ -46,4 +46,4 @@ gulp.task('serve', function() {
   })
 });
 
-gulp.task('default', ['serve', 'watch']);
+gulp.task('default', ['serve', 'copy', 'watch']);
