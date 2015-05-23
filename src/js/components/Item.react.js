@@ -24,12 +24,12 @@ var Item = React.createClass({
 
   toggle: function(event) {
     event.preventDefault();
-    Actions.toggle(event.target.parentNode.parentNode.attributes['data-id'].value);
+    Actions.toggle(this.props.data.id);
   },
 
   delete: function(event) {
     event.preventDefault();
-    Actions.delete(event.target.parentNode.parentNode.attributes['data-id'].value);
+    Actions.delete(this.props.data.id);
   }
 });
 
