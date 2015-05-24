@@ -33,9 +33,6 @@ The implementation uses:
 
 ## Notes
 
-- Due to time constraints this implementation **wasn't** done using [http://coffeescript.org/]
-
-## To be improved
-
-The REST API responds to all Post requests with the full list of updated TODOs.
-This was done for simplicity but it wont be a well performing implementation for a real application.
+- Due to time constraints this implementation **wasn't** done using [CoffeeScript](http://coffeescript.org/).
+- Unit testing is not exhaustive, its intention is to showcase the practice.
+- The REST API responds to all Post requests with the full list of up to date TODOs. This was done for simplicity but it wont be a well performing implementation for a real application, nor a proper implementation of REST (eg: a post request to modify a particular TODO should return the affected object, not the whole list).
