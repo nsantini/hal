@@ -4,6 +4,8 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var reactify = require('reactify');
 var nodemon = require('gulp-nodemon');
+var coffee = require('gulp-coffee');
+var gutil = require('gulp-util');
 
 var path = {
   HTML: 'src/index.html',
@@ -46,4 +48,10 @@ gulp.task('serve', function() {
   })
 });
 
-gulp.task('default', ['serve', 'copy', 'watch']);
+gulp.task('coffee', function() {
+  gulp.src('./coffee/*.coffee')
+    .pipe(coffee({bare: true}).on('error', gutil.log))
+    .pipe(gulp.dest('./server/'))
+});
+
+gulp.task('default', ['coffee', 'serve', 'copy', 'watch']);
