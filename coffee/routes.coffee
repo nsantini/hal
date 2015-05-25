@@ -23,7 +23,7 @@ routes =
       respondWithTodos(res)
     )
 
-    app.post('/todos/deleteall', (req, res) ->
+    app.delete('/todos/deleteall', (req, res) ->
       todos.deleteAll()
       respondWithTodos(res)
     )
@@ -33,7 +33,7 @@ routes =
       respondWithTodos(res)
     )
 
-    app.post('/todos/delete/:id', (req, res) ->
+    app.delete('/todos/delete/:id', (req, res) ->
       todos.delete(req.params.id)
       respondWithTodos(res)
     )

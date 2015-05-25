@@ -73,7 +73,7 @@ var Store = assign({}, EventEmitter.prototype, {
     var todo = this.getTodo(id);
     $.ajax({
       url: todo.getLink('delete').href,
-      method: 'POST',
+      method: 'DELETE',
       success: Store.loadTodos
     });
   },
@@ -81,7 +81,7 @@ var Store = assign({}, EventEmitter.prototype, {
   deleteAll: function() {
     $.ajax({
       url: _todos.getLink('delete').href,
-      method: 'POST',
+      method: 'DELETE',
       success: Store.loadTodos
     });
   }
