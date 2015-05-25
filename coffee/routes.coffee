@@ -1,7 +1,7 @@
 todos = require('./todos')
 
 respondWithTodos = (res) ->
-  res.send(JSON.stringify(todos.getAllTodos()))
+  res.json(JSON.stringify(todos.getAllTodos()))
 
 routes =
   registerRoutes: (app) ->
@@ -10,7 +10,7 @@ routes =
     )
 
     app.get('/todos/:id', (req, res) ->
-      res.send(JSON.stringify(todos.getTodo(req.params.id)))
+      res.json(JSON.stringify(todos.getTodo(req.params.id)))
     )
 
     app.post('/todos/add', (req, res) ->
